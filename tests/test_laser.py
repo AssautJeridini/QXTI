@@ -95,11 +95,12 @@ def plot_laser_preview(laser: Laser, t: np.ndarray, output_path: Path) -> Path:
     ex = electric_field[:, 0]
     ey = electric_field[:, 1]
     ez = electric_field[:, 2]
+    field_norm = np.linalg.norm(electric_field, axis=1)
     time_colors = np.linspace(0.0, 1.0, len(t))
     centered_time = t - laser.t0
     time_scale = max(np.max(np.abs(centered_time)), 1e-12)
     normalized_time = centered_time / time_scale
-    envelope_scaled = laser.E0 * np.asarray(envelope, dtype=float)
+    amplitude_bound = laser.E0 * np.asarray(envelope, dtype=float)
 
     figure = plt.figure(figsize=(13, 9))
     grid = figure.add_gridspec(2, 2, height_ratios=(1.0, 1.15))
@@ -128,19 +129,26 @@ def plot_laser_preview(laser: Laser, t: np.ndarray, output_path: Path) -> Path:
     axis_time.plot(normalized_time, ez, color="tab:orange", linewidth=1.8, label="Ez(t)")
     axis_time.plot(
         normalized_time,
-        envelope_scaled,
-        color="0.25",
-        linewidth=1.6,
-        linestyle="--",
-        label="+ envelope",
+        field_norm,
+        color="tab:red",
+        linewidth=1.8,
+        label="|E(t)|",
     )
     axis_time.plot(
         normalized_time,
-        -envelope_scaled,
-        color="0.25",
-        linewidth=1.2,
+        amplitude_bound,
+        color="0.10",
+        linewidth=1.9,
         linestyle="--",
-        label="- envelope",
+        label="+ amplitude bound",
+    )
+    axis_time.plot(
+        normalized_time,
+        -amplitude_bound,
+        color="0.10",
+        linewidth=1.4,
+        linestyle="--",
+        label="- amplitude bound",
     )
     axis_time.set_title("Field components in time")
     axis_time.set_xlabel("normalized time")
@@ -251,6 +259,17 @@ def test_rotation_matrix_is_orthonormal() -> None:
     assert np.allclose(rotation[:, 0], laser.polarization_vector(), atol=1e-12)
 
 
+def test_field_norm_is_bounded_by_amplitude_envelope() -> None:
+    laser = build_preview_laser()
+    t = build_visualization_time(laser, **PREVIEW_TIME_PARAMS)
+
+    electric_field = laser.electric_field(t)
+    field_norm = np.linalg.norm(electric_field, axis=1)
+    amplitude_bound = laser.E0 * np.asarray(laser.envelope_function(t), dtype=float)
+
+    assert np.all(field_norm <= amplitude_bound + 1e-12)
+
+
 def test_laser_preview_generation(tmp_path: Path) -> None:
     if not HAS_MATPLOTLIB:
         return
@@ -270,6 +289,7 @@ if __name__ == "__main__":
     test_linear_polarization_orientation_from_angles()
     test_ellipticity_sign_sets_rotation_sense()
     test_rotation_matrix_is_orthonormal()
+    test_field_norm_is_bounded_by_amplitude_envelope()
     print("Core Laser checks passed.")
 
     if HAS_MATPLOTLIB:

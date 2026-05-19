@@ -38,7 +38,7 @@ PREVIEW_LASER_PARAMS = {
     "envelope": "gaussian",
     "t0": 0.0,
     "theta": 0.5 * np.pi,
-    "phi": 0.0,
+    "phi": 0.25 * np.pi,
 }
 
 PREVIEW_TIME_PARAMS = {
@@ -52,7 +52,7 @@ def build_reference_laser() -> Laser:
         omega=0.85,
         E0=0.06,
         phase=0.2,
-        ellipticity=0.0,
+        ellipticity=1.0,
         fwhm=24.0,
         envelope="gaussian",
         t0=0.0,

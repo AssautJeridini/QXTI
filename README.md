@@ -41,6 +41,7 @@ QXTI/
 ```
 
 For the full module map and architectural rules, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+For the Hamiltonian interface documentation, see [docs/HAMILTONIAN.md](docs/HAMILTONIAN.md).
 For the pulse model documentation, see [docs/LASER.md](docs/LASER.md).
 
 ## Development Roadmap

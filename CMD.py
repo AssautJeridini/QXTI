@@ -1,3 +1,4 @@
+# Librarías estándar
 
 from __future__ import annotations
 from typing import Dict, List, Tuple, Any
@@ -7,7 +8,7 @@ from numpy.typing import NDArray
 # Tipado interno idéntico al de tu infraestructura de física
 ComplexArray = NDArray[np.complex128]
 
-# Interfaces de infraestructura externas requeridas por el constructor
+# Attributes for CMD class
 class LaserSystem: pass
 class KGrid: pass
 class TimeGrid: pass

@@ -157,7 +157,7 @@ class CMD:
             
             # Las coherencias (fuera de diagonal) decaen a cero de forma neta
             mascara_coherencias = ~np.eye(rho.shape[0], dtype=bool)
-            d_rho_disipativo[mascara_coherencias] = -self.gamma_coherence * rho[mascara_coherences]
+            d_rho_disipativo[mascara_coherencias] = -self.gamma_coherence * rho[mascara_coherencias]
             
         return d_rho_coherente + d_rho_disipativo
 

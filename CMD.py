@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 from typing import Dict, List, Tuple, Any
-import numpy as np
+import numpy as np                        # Permite usar matrices y álgebra lineal.
 from numpy.typing import NDArray
 
-# Tipado interno idéntico al de tu infraestructura de física
-ComplexArray = NDArray[np.complex128]
+ComplexArray = NDArray[np.complex128]     # Permite usar matrices con componentes complejas.
 
 # Attributes for CMD class
 class LaserSystem: pass

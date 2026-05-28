@@ -7,14 +7,14 @@ from numpy.typing import NDArray
 
 ComplexArray = NDArray[np.complex128]     # Permite usar matrices con componentes complejas.
 
-# Attributes for CMD class
-class LaserSystem: pass
-class KGrid: pass
-class TimeGrid: pass
-class OperatorFactory: pass
-class Solver: pass
-from qxti.physics import Hamiltonian  # Importación de tu clase base abstracta 
+"""Atributos de la clase CMD"""
 
+from qxti.physics import Hamiltonian
+from qxti.physics import LaserSystem 
+from qxti.physics import KGrid
+from qxti.physics import TimeGrid
+from qxti.physics import OperatorFactory
+from qxti.physics import Solver
 
 class CMD:
     """
@@ -64,6 +64,12 @@ class CMD:
         self.include_dephasing: bool = include_dephasing
 
     # --- Methods / Inputs -> Outputs ---
+
+    # Definición para las distintas distribuciones.
+
+    def 
+
+
 
     def rho_equilibrium(self, k: NDArray[np.float64]) -> ComplexArray:
         """
